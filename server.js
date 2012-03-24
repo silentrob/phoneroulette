@@ -27,14 +27,19 @@ var logger = function(message) {
   log.write(message + "\n");    
 }
 
-
-
 app.get('/', function(req, res){
   res.render('index.ejs', { layout: 'layout' });
 });
 
 app.post('/twilio', function(req, res){
-  logger(JSON.stringify(req.body));
+  logger(JSON.stringify(req.body));  
+  
+  var params = JSON.parse(req.body);  
+  var body = params.Body;
+  var number = params.From;
+  
+  // geme.someMethod(number,body);
+  
   res.send('\n', 204);
 });
 
