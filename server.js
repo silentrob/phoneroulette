@@ -7,10 +7,10 @@ var request = require('request');
 var port = process.env.PORT || 4000;
 var log = fs.createWriteStream(__dirname + '/log/development.log', {'flags': 'a'});
 
+var game = require("./lib/game");
+
 var config = fs.readFileSync(__dirname + '/config/development.json', 'utf8');
 config = JSON.parse(config);
-
-var API_ENDPOINT = "https://api.twilio.com/2010-04-01";
 
 var app = express.createServer(
   // express.logger(),
@@ -32,24 +32,6 @@ var logger = function(message) {
   log.write(message + "\n");    
 }
 
-app.get('/', function(req, res){
-  res.render('index.ejs', { layout: 'layout' });
-});
-
-app.post('/twilio', function(req, res){
-  logger(JSON.stringify(req.body));  
-  
-  var params = JSON.parse(req.body);  
-  var body = params.Body;
-  var number = params.From;
-  
-  // game.inbound({number:number,body:body}, function(){
-  // });
-  
-  res.send('\n', 204);
-});
-
-
 // Twilio Send Message Call
 var sendMessage = function(options, callback) {
   if (!options.body || !options.phone) {
@@ -69,14 +51,38 @@ var sendMessage = function(options, callback) {
   
   request(options, function (error, response, body) {
     if (!error && response.statusCode == 201) {
-      callback(201, body)
+      if (callback)
+        callback(201, body)
     } 
     if (error) {
       logger("[ERROR]" + error);
-      callback(response.statusCode, error)
+      if (callback)
+        callback(response.statusCode, error)
     }
   })
 }
+
+
+app.get('/', function(req, res){
+  res.render('index.ejs', { layout: 'layout' });
+});
+
+app.post('/twilio', function(req, res){
+  logger(JSON.stringify(req.body));  
+  
+  var params = JSON.parse(req.body);  
+  var body = params.Body;
+  var number = params.From;
+  
+  game.inbound({number:number,body:body}, function(err,messages){
+    for (var i = 0;i < messages.length; i++) {
+      sendMessage(messages[i]);
+    }
+  });
+  
+  res.send('\n', 204);
+});
+
 
 // Test Method
 app.get('/send',function(req,res){
