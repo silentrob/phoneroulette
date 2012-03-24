@@ -1,12 +1,12 @@
 var express = require("express");
-
-var RedisStore = require('connect-redis')(express);
+var SessionStore = require('connect-redis')(express);
+var port = process.env.PORT || 4000;
 
 var app = express.createServer(
   // express.logger(),
   express.bodyParser(),
   express.cookieParser(),
-  express.session({ store: new RedisStore, secret: 'keyboard cat' })  
+  express.session({ store: new SessionStore, secret: 'keyboard cat' })  
 );
 
 app.configure(function(){
@@ -16,9 +16,6 @@ app.configure(function(){
 });
 
 app.set("view options", { layout: "layouts/layout" });
-
-
-var port = process.env.port || 4000;
 
 app.get('/', function(req, res){
   res.render('index.ejs', { layout: 'layout' });
