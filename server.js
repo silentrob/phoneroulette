@@ -21,5 +21,9 @@ app.get('/', function(req, res){
   res.render('index.ejs', { layout: 'layout' });
 });
 
-console.log("Server Running on Port",  port)
+app.post('/twilio', function(req, res){
+  res.send('\n', 204);
+});
+
 app.listen(port);
+console.log("Server Running on Port",  port);
