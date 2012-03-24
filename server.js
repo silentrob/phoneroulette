@@ -51,13 +51,18 @@ var sendMessage = function(options, callback) {
   
   request(options, function (error, response, body) {
     if (!error && response.statusCode == 201) {
-      if (callback)
+      if (callback) {
+        logger("Message Sent " + body);
         callback(201, body)
+      }
+        
     } 
     if (error) {
-      logger("[ERROR]" + error);
-      if (callback)
+      logger("[ERROR] " + error);
+      if (callback) {
         callback(response.statusCode, error)
+      }
+        
     }
   })
 }
