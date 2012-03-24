@@ -1,6 +1,9 @@
 var express = require("express");
-
 var RedisStore = require('connect-redis')(express);
+
+var API_ENDPOINT = "https://api.twilio.com/2010-04-01";
+var port = process.env.port || 4000;
+
 
 var app = express.createServer(
   // express.logger(),
@@ -18,7 +21,6 @@ app.configure(function(){
 app.set("view options", { layout: "layouts/layout" });
 
 
-var port = process.env.port || 4000;
 
 app.get('/', function(req, res){
   res.render('index.ejs', { layout: 'layout' });
