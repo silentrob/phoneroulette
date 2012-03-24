@@ -83,7 +83,7 @@ app.post('/twilio', function(req, res){
   var number = params.From;
   
   game.inbound({number:number,body:body}, function(err ,messages){
-    
+    logger("IN INBOUND " + err + " " + messages)
     for (var i = 0;i < messages.length; i++) {
       sendMessage(messages[i]);
     }
