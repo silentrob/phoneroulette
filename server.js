@@ -30,11 +30,11 @@ var logger = function(message) {
 
 
 app.get('/', function(req, res){
-  logger("This is a test")
   res.render('index.ejs', { layout: 'layout' });
 });
 
 app.post('/twilio', function(req, res){
+  logger(JSON.stringify(req.body));
   res.send('\n', 204);
 });
 
