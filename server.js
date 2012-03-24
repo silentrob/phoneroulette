@@ -7,7 +7,10 @@ var request = require('request');
 var port = process.env.PORT || 4000;
 var log = fs.createWriteStream(__dirname + '/log/development.log', {'flags': 'a'});
 
-var game = require("./lib/game");
+var redis = require("redis")
+var client = redis.createClient()
+var game = require("./lib/game")(client)
+
 
 var config = fs.readFileSync(__dirname + '/config/development.json', 'utf8');
 config = JSON.parse(config);
@@ -79,7 +82,8 @@ app.post('/twilio', function(req, res){
   var body = params.Body;
   var number = params.From;
   
-  game.inbound({number:number,body:body}, function(err,messages){
+  game.inbound({number:number,body:body}, function(err ,messages){
+    
     for (var i = 0;i < messages.length; i++) {
       sendMessage(messages[i]);
     }
