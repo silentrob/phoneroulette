@@ -80,9 +80,9 @@ app.post('/twilio', function(req, res){
   
   var params = JSON.parse(req.body);  
   var body = params.Body;
-  var number = params.From;
+  var phone = params.From;
   
-  game.inbound({number:number,body:body}, function(err ,messages){
+  game.inbound({phone:phone,body:body}, function(err ,messages){
     logger("IN INBOUND " + err + " " + messages)
     for (var i = 0;i < messages.length; i++) {
       sendMessage(messages[i]);
@@ -94,11 +94,21 @@ app.post('/twilio', function(req, res){
 
 
 // Test Method
-app.get('/send',function(req,res){
-  sendMessage({body:'test',phone:'12345'}, function(status){
-    console.log("GO")
-    res.send("DONE");
-  })
+app.get('/test',function(req,res){
+  // sendMessage({body:'test',phone:'12345'}, function(status){
+  //   console.log("GO")
+  //   res.send("DONE");
+  // })
+
+  game.inbound({phone:'123',body:'hi'}, function(err ,messages){
+    console.log("IN INBOUND " + err + " " + messages)
+    for (var i = 0;i < messages.length; i++) {
+      console.log(messages[i])
+    //   sendMessage(messages[i]);
+    }
+  });
+  res.send("DONE");
+
 })
 
 app.listen(port);
