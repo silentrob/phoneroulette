@@ -1,10 +1,12 @@
 var express = require("express");
 
+var RedisStore = require('connect-redis')(express);
+
 var app = express.createServer(
   express.logger(),
   express.bodyParser(),
   express.cookieParser(),
-  express.session({ secret: 'somesecret'})
+  express.session({ store: new RedisStore, secret: 'keyboard cat' })  
 );
 
 app.configure(function(){
@@ -20,7 +22,6 @@ var port = process.env.port || 4000;
 
 app.get('/', function(req, res){
   res.render('index.ejs', { layout: 'layout' });
-  // res.send('hello world');
 });
 
 console.log("Server Running on Port",  port)
