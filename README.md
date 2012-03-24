@@ -1,4 +1,7 @@
 Twilio + SMS
 ====
 
-VanHack
+VanHack Project Brock Whitten (sintaxi), Rob Ellis (silentrob)
+
+NPM Install
+

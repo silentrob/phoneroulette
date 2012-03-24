@@ -1,0 +1,10 @@
+{
+    "name":"phoneroulette",
+    "version":"0.0.1",
+    "description": "VanHack Project",
+    
+    "dependencies": {
+        "express": "2.5.8",
+        "ejs": "*"
+    }
+}
