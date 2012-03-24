@@ -78,6 +78,7 @@ var sendMessage = function(options, callback) {
   })
 }
 
+// Test Method
 app.get('/send',function(req,res){
   sendMessage({body:'test',phone:'12345'}, function(status){
     console.log("GO")
