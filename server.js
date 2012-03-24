@@ -1,6 +1,11 @@
+var fs = require('fs');
+
 var express = require("express");
 var SessionStore = require('connect-redis')(express);
 var port = process.env.PORT || 4000;
+var log = fs.createWriteStream(__dirname + '/log/development.log', {'flags': 'a'});
+
+var API_ENDPOINT = "https://api.twilio.com/2010-04-01";
 
 var app = express.createServer(
   // express.logger(),
@@ -17,7 +22,15 @@ app.configure(function(){
 
 app.set("view options", { layout: "layouts/layout" });
 
+
+var logger = function(message) {
+  log.write(message + "\n");    
+}
+
+
+
 app.get('/', function(req, res){
+  logger("This is a test")
   res.render('index.ejs', { layout: 'layout' });
 });
 
