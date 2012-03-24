@@ -3,7 +3,7 @@ var express = require("express");
 var RedisStore = require('connect-redis')(express);
 
 var app = express.createServer(
-  express.logger(),
+  // express.logger(),
   express.bodyParser(),
   express.cookieParser(),
   express.session({ store: new RedisStore, secret: 'keyboard cat' })  
