@@ -37,9 +37,11 @@ var logger = function(message) {
 
 // Twilio Send Message Call
 var sendMessage = function(options, callback) {
-  if (!options.body || !options.phone) {
-    throw new Error("Missing Number and/or Message")
-  }
+  // if (!options.body || !options.phone) {
+  //   throw new Error("Missing Number and/or Message")
+  // }
+
+  console.log("<<", options)
   
   var options = {
     method:'POST',
@@ -85,7 +87,7 @@ app.post('/twilio', function(req, res){
   game.inbound({phone:phone,body:body}, function(err ,messages){
     logger("IN INBOUND " + err + " " + messages)
     for (var i = 0;i < messages.length; i++) {
-      sendMessage(messages[i]);
+      sendMessage({phone: messages[i].phone, body: messages[i].body});
     }
   });
   
@@ -100,13 +102,12 @@ app.get('/test',function(req,res){
   //   res.send("DONE");
   // })
 
-  game.inbound({phone:'123',body:'hi'}, function(err ,messages){
-    console.log("IN INBOUND " + err + " " + messages)
+  game.inbound({phone:'17789879239',body:'hi'}, function(err ,messages){
     for (var i = 0;i < messages.length; i++) {
-      console.log(messages[i])
-    //   sendMessage(messages[i]);
+      sendMessage({phone: messages[i].phone, body: messages[i].body});
     }
   });
+  
   res.send("DONE");
 
 })
