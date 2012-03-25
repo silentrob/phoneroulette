@@ -41,7 +41,7 @@ var sendMessage = function(options, callback) {
   //   throw new Error("Missing Number and/or Message")
   // }
 
-  console.log("<<", options)
+  // console.log("<<", options)
   
   var options = {
     method:'POST',
@@ -55,6 +55,7 @@ var sendMessage = function(options, callback) {
   }
   
   request(options, function (error, response, body) {
+    // console.log(error, response)
     if (!error && response.statusCode == 201) {
       if (callback) {
         logger("Message Sent " + body);
@@ -97,16 +98,16 @@ app.post('/twilio', function(req, res){
 
 // Test Method
 app.get('/test',function(req,res){
-  // sendMessage({body:'test',phone:'12345'}, function(status){
-  //   console.log("GO")
-  //   res.send("DONE");
-  // })
+  sendMessage({body:'test',phone:'+17789879239'}, function(status){
+    console.log("GO")
+    res.send("DONE");
+  })
 
-  game.inbound({phone:'17789879239',body:'hi'}, function(err ,messages){
-    for (var i = 0;i < messages.length; i++) {
-      sendMessage({phone: messages[i].phone, body: messages[i].body});
-    }
-  });
+  // game.inbound({phone:'17789879239',body:'hi'}, function(err ,messages){
+  //   for (var i = 0;i < messages.length; i++) {
+  //     sendMessage({phone: messages[i].phone, body: messages[i].body});
+  //   }
+  // });
   
   res.send("DONE");
 
