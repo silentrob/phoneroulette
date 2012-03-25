@@ -1,3 +1,41 @@
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Phone Roulette</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<%- body %>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+      .navbar-inner {
+        background-image: -moz-linear-gradient(top, #669900, #436500);
+        background-image: -ms-linear-gradient(top, #669900, #436500);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#669900), to(#436500));
+        background-image: -webkit-linear-gradient(top, #669900, #436500);
+        background-image: -o-linear-gradient(top, #669900, #436500);
+        background-image: linear-gradient(top, #669900, #436500);
+        background-repeat: repeat-x;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#669900, endColorstr='#436500, GradientType=0);
+      }     
+      
+      .subhead h1 {
+        font-size:54px
+      } 
+    </style>
+
+  </head>
+
+  <body data-spy="scroll" data-target=".subnav" data-offset="50">
+
+  <%- body %>
+
+  </body>
+</html>
