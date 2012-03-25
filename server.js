@@ -11,7 +11,6 @@ var redis = require("redis")
 var c = redis.createClient()
 var game = require("./lib/game")(c)
 
-
 var config = fs.readFileSync(__dirname + '/config/development.json', 'utf8');
 config = JSON.parse(config);
 
@@ -74,11 +73,12 @@ app.post('/twilio', function(req, res){
   var body = params.Body;
   var phone = params.From;
   
-  game.inbound({phone:phone,body:body}, function(err ,messages){
-    // logger("IN INBOUND " + err + " " + messages)
-    for (var i = 0;i < messages.length; i++) {
-      sendMessage({phone: messages[i].phone, body: messages[i].body});
-    }
+  game.inbound({phone:phone, body:body}, function(err , messages){
+    logger("IN INBOUND " + err + " " + messages)
+    
+    messages.forEach(function(msg){
+      sendMessage({phone: msg.phone, body: msg.body});
+    })
   });
   
   res.send('\n', 204);
